@@ -45,3 +45,4 @@ spring:
     init:
       mode: always
   test.database.replace: none # AutoConfigurationTestDatabase 대체
+  
