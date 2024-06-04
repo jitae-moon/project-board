@@ -3,14 +3,8 @@ package com.example.projectboard.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,9 +17,9 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class) // MappedSuperclass로 이동
 @Entity // 기본 생성자 있어야 함(hibernate 기준)
-public class Article {
+public class Article extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL은 Identity 방식으로 Auto-increment 됨
@@ -41,10 +35,11 @@ public class Article {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL) // Article table로부터 왔다는 것 명시
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
-    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt; // 생성일시
-    @CreatedBy @Column(nullable = false, length = 100) private String createdBy; // 생성자
-    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt; // 수정일시
-    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy; // 수정자
+    // 공통 부분 추출 -> MappedSuperclass vs Embedded
+//    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt; // 생성일시
+//    @CreatedBy @Column(nullable = false, length = 100) private String createdBy; // 생성자
+//    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt; // 수정일시
+//    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy; // 수정자
 
     protected Article() {}
 
