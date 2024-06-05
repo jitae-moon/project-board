@@ -34,8 +34,37 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-core'
+    implementation 'com.querydsl:querydsl-collections' // 필수까지는 아님
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+    // 이하는 필수는 아님
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// QueryDSL 설정부 원래는 build에 바로 들어감 IDE 사용 시 생겨날 수 있는 문제 피하기 위해(gradle과의 build 충돌)
+def generated = 'src/main/generated'
+
+// QueryDSL Qclass 파일 위치
+tasks.withType(JavaCompile) {
+    options.getGeneratedSourceOutputDirectory().set(file(generated))
+}
+
+// Java Source Set에 QueryDSL QClass 위치 추가
+// Gradle source set 참고
+sourceSets {
+    main.java.srcDirs += [ generated ]
+}
+
+// Gradle clean시 Qclass directory 삭제
+clean {
+
+    delete file(generated)
 }
