@@ -29,6 +29,8 @@ spring:
     rest:
       base-path: /api
       detection-strategy: annotated # Annotation 지정한 것만 오픈
+  thymeleaf3:
+    decoupled-logic: true
 
 debug: false # Logback
 management.endpoints.web.exposure.include: "*" # Actuator endpoint
