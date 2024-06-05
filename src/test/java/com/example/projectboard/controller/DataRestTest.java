@@ -1,5 +1,6 @@
 package com.example.projectboard.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //@WebMvcTest // MockMvc 사용 가능하게 해줌 Controller외에 불러들이지 않음 -> 통합 테스트로 변경
+@Disabled("Spring Data REST 통합테스트는 불필요해서 제외시킴") // 통합테스트라 무거워서 제외해놓음
 @DisplayName("Data Rest API test")
 @AutoConfigureMockMvc
+@Transactional // 통합테스트라 Repository까지 건들이기 때문에 추가
 @SpringBootTest
 public class DataRestTest {
 
@@ -26,7 +29,6 @@ public class DataRestTest {
     }
 
     @DisplayName("[api] 게시글 리스트 조회")
-    @Transactional // 통합테스트라 Repository까지 건들이기 때문에 추가
     @Test
     void givenNothing_whenRequestingArticles_thenReturnsArticlesJsonResponse() throws Exception {
         // Given
