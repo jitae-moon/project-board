@@ -23,6 +23,6 @@ class MainControllerTest {
     @Test
     void given_when_then() throws Exception {
         mvc.perform(get("/"))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isOk());
     }
 }
