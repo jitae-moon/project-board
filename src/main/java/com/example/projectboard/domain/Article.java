@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
@@ -25,13 +25,15 @@ public class Article extends AuditingFields {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL은 Identity 방식으로 Auto-increment 됨
     private Long id;
 
+    @Setter @ManyToOne(optional = false) private UserAccount userAccount;
+
     // Setter를 클래스 레벨에 적용할 경우 id도 바뀔 수가 있음
     @Setter @Column(nullable = false) private String title; // 제목
     @Setter @Column(nullable = false, length = 10000) private String content; // 내용
     @Setter private String hashtag; // 해시태그
 
-    @ToString.Exclude
-    @OrderBy("id")
+    @ToString.Exclude // 순환참조 방지
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL) // Article table로부터 왔다는 것 명시
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
@@ -43,15 +45,16 @@ public class Article extends AuditingFields {
 
     protected Article() {}
 
-    private Article(String title, String content, String hashtag) {
+    private Article(UserAccount userAccount, String title, String content, String hashtag) {
+        this.userAccount = userAccount;
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
 
     // Factory method pattern
-    public static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
+    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Article(userAccount, title, content, hashtag);
     }
 
     // ID만 검사하면 동일한지 알 수 있음
