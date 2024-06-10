@@ -19,6 +19,7 @@ spring:
       hibernate:
         format_sql: true # 한 줄짜리 쿼리 여러 줄로 변경
         default_batch_fetch_size: 100 # (N + 1)문제 참조
+    open-in-view: false
   h2:
     console:
       enabled: false
