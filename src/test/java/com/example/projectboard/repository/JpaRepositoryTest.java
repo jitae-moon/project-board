@@ -2,6 +2,7 @@ package com.example.projectboard.repository;
 
 import com.example.projectboard.config.JpaConfig;
 import com.example.projectboard.domain.Article;
+import com.example.projectboard.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ class JpaRepositoryTest {
     void givenTestData_whenInserting_thenWorksFine() {
         // Given
         long previousCount = articleRepository.count();
-        Article article = Article.of("test title", "test content", "test hashtag");
+        Article article = Article.of(UserAccount.of("test userId", "test password", "test email", null, null), "test title", "test content", "test hashtag");
 
         // When
         Article savedArticle = articleRepository.save(article);
