@@ -147,17 +147,40 @@ class ArticleControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
     }
 
-    @Disabled("구현 중")
     @DisplayName("[view][GET] 게시글 해시태그 페이지 - 정상 호출") // Navigation bar로 만들 예정
     @Test
     public void givenNothing_whenRequestingArticleHashtagSearchView_thenReturnsArticleHashtagSearchView() throws Exception {
         // Given
+        given(articleService.searchArticlesViaHashtag(eq(null), any(Pageable.class))).willReturn(Page.empty());
 
         // When & Then
         mvc.perform(get("/articles/search-hashtag"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("articles/search-hashtag"))
+                .andExpect(model().attribute("articles", Page.empty()))
+                .andExpect(model().attributeExists("hashtags"))
+                .andExpect(model().attributeExists("paginationBarNumbers"))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
+        then(articleService).should().searchArticlesViaHashtag(eq(null), any(Pageable.class));
+    }
+
+    @DisplayName("[view][GET] 게시글 해시태그 페이지 - 정상 호출, 해시태그 입력") // Navigation bar로 만들 예정
+    @Test
+    public void givenHashtag_whenRequestingArticleHashtagSearchView_thenReturnsArticleHashtagSearchView() throws Exception {
+        // Given
+        String hashtag = "#java";
+        given(articleService.searchArticlesViaHashtag(eq(hashtag), any(Pageable.class))).willReturn(Page.empty());
+
+        // When & Then
+        mvc.perform(get("/articles/search-hashtag")
+                        .queryParam("searchValue", hashtag))
+                .andExpect(status().isOk())
+                .andExpect(view().name("articles/search-hashtag"))
+                .andExpect(model().attribute("articles", Page.empty()))
+                .andExpect(model().attributeExists("hashtags"))
+                .andExpect(model().attributeExists("paginationBarNumbers"))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
+        then(articleService).should().searchArticlesViaHashtag(eq(hashtag), any(Pageable.class));
     }
 
     private ArticleWithCommentsDto createArticleWithCommentsDto() {
