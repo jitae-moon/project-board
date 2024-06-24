@@ -54,49 +54,43 @@
     </div>
 
     <!-- 테이블 -->
-    <table class="table" id="article-table">
-      <thead>
-        <tr>
-          <th class="title col-5"><a>제목</a></th>
-          <th class="hashtag col-3"><a>해시태그</a></th>
-          <th class="user-id col-2"><a>작성자</a></th>
-          <th class="created-at col-2"><a>작성일</a></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="title"><a>test title1</a></td>
-          <td class="hashtag">test hashtag</td>
-          <td class="user-id">test createdBy</td>
-          <td class="created-at"><time>2024-06-11</time></td>
-        </tr>
-        <tr>
-          <td>test title</td>
-          <td>test hashtag</td>
-          <td>test createdBy</td>
-          <td>test createdAt</td>
-        </tr>
-        <tr>
-          <td>test title</td>
-          <td>test hashtag</td>
-          <td>test createdBy</td>
-          <td>test createdAt</td>
-        </tr>
-      </tbody>
-      <!--
-      <tfoot>
+    <div class="row">
+      <table class="table" id="article-table">
+        <thead>
+          <tr>
+            <th class="title col-5"><a>제목</a></th>
+            <th class="hashtag col-3"><a>해시태그</a></th>
+            <th class="user-id col-2"><a>작성자</a></th>
+            <th class="created-at col-2"><a>작성일</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="title"><a>test title1</a></td>
+            <td class="hashtag">test hashtag</td>
+            <td class="user-id">test createdBy</td>
+            <td class="created-at"><time>2024-06-11</time></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      </tfoot> -->
-    </table>
+    <div class="row">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary me-md-2" role="button" id="write-article">글쓰기</a>
+      </div>
+    </div>
 
     <!-- table navigation bar -->
-    <nav id="pagination" aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+    <div class="row">
+      <nav id="pagination" aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
+    </div>
   </main>
 
   <footer id="footer">
