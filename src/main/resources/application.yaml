@@ -19,6 +19,7 @@ spring:
       hibernate:
         format_sql: true # 한 줄짜리 쿼리 여러 줄로 변경
         default_batch_fetch_size: 100 # (N + 1)문제 참조
+        dialect: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false
   h2:
     console:
@@ -43,7 +44,6 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: trace # JPA
 
 ---
-
 spring:
   config:
     activate:
@@ -55,14 +55,13 @@ spring:
     init:
       mode: always
   test.database.replace: none # AutoConfigurationTestDatabase 대체
-
 ---
 spring:
   config:
     active:
       on-profile: heroku
   datasource:
-    url: ${CLEARDB_DATABASE_URL}
+    url: ${JAWSDB_URL}
   jpa:
     hibernate:
       ddl-auto: create
